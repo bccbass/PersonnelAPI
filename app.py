@@ -2,6 +2,7 @@ from os import environ
 
 from flask import Flask
 from init import db, ma, bcrypt, jwt
+from blueprints.cli_bp import cli_commands
 
 def create_app():
     # create instance of Flask object
@@ -18,6 +19,9 @@ def create_app():
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    # Register blueprints with App object
+    app.register_blueprint(cli_commands)
 
     @app.route('/')
     def index():
