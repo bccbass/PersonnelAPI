@@ -1,5 +1,7 @@
-from init import db, ma
+from sqlalchemy import TIMESTAMP
 from marshmallow import fields
+
+from init import db, ma
 
 
 class User(db.Model):
@@ -11,5 +13,5 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     # create user role:
     is_admin = db.Column(db.Boolean, default=False)
-    date_created = db.Column(db.Date(), nullable=False)
-    date_updated = db.Column(db.Date(), nullable=False)
+    date_created = db.Column(db.Date, nullable=False)
+    date_updated = db.Column(db.Date, nullable=False)

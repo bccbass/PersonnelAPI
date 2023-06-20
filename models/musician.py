@@ -4,7 +4,7 @@ from init import db, ma
 
 
 class Musician(db.Model):
-    __name__ = 'musicians'
+    __tablename__ = 'musicians'
 
     id = db.Column(db.Integer, primary_key=True)
     f_name = db.Column(db.String(255), nullable=False)

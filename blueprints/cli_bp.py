@@ -17,7 +17,7 @@ cli_commands = Blueprint('db', __name__)
 @cli_commands.cli.command('create')
 def create_tables():
     db.drop_all()
-    db.create_all([Musician, Track, Track_Musician])
+    db.create_all()
     print('Created Personnel tables')
 
 # @cli_commands.cli.command('seed_tables' __name__)
@@ -31,16 +31,16 @@ def seed_users():
         email = "dev@cs.com",
         password = generate_pw('dev'),
         is_admin = True,
-        date_created = int(time()),
-        date_updated = int(time())
+        date_created = date.today(),
+        date_updated = date.today()
         ),
         User(
         name = "Julian Adderly",
         email = "alto@cannonball.com",
         password = generate_pw('soul'),
         is_admin = False,
-        date_created = int(time()),
-        date_updated = int(time())
+        date_created = date.today(),
+        date_updated = date.today()
         )
     ]
 
