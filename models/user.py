@@ -14,4 +14,4 @@ class User(db.Model):
     # create user role:
     is_admin = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.Date, nullable=False)
-    date_updated = db.Column(db.Date, nullable=False)
+    last_updated = db.Column(db.Date, nullable=False)

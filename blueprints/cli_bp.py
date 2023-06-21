@@ -1,16 +1,13 @@
-from datetime import date
-from time import time
-# from init import bcrypt
 
 from flask import Blueprint
 
-from init import db, ma, jwt, bcrypt
-from utilities import generate_pw
+from init import db, ma, jwt
+from blueprints.seed_data import users, albums, musicians, water_babies, tracks
 from models.album import Album
 from models.musician import Musician
 from models.track import Track
 from models.user import User
-from models.track_musician import Track_Musician
+from models.track_musician import track_musician
 
 cli_commands = Blueprint('db', __name__)
 
@@ -20,34 +17,31 @@ def create_tables():
     db.create_all()
     print('Created Personnel tables')
 
-# @cli_commands.cli.command('seed_tables' __name__)
-# def seed_tables():
-
 @cli_commands.cli.command('seed_users')
 def seed_users():
-    users = [
-        User(
-        name = "Personnel Dev",
-        email = "dev@cs.com",
-        password = generate_pw('dev'),
-        is_admin = True,
-        date_created = date.today(),
-        date_updated = date.today()
-        ),
-        User(
-        name = "Julian Adderly",
-        email = "alto@cannonball.com",
-        password = generate_pw('soul'),
-        is_admin = False,
-        date_created = date.today(),
-        date_updated = date.today()
-        )
-    ]
-
     db.session.query(User).delete()
     db.session.add_all(users)
     db.session.commit()
-    print('Succesfully seeded users!')
+    print('Succesfully seeded users')
 
+@cli_commands.cli.command('seed_tables')
+def seed_tables():
+    # Albums
+    db.session.query(Album).delete()
+    db.session.add_all(albums)
+    db.session.commit()
+    print('Seeded albums')    
+    # Tracks
+    db.session.query(Track).delete()
+    for i in range(len(tracks)):
+        db.session.add_all(tracks[i])
+    db.session.commit()
+    print('Seeded tracks')    
+    # Musicians
+    db.session.query(Musician).delete()
+    db.session.add_all(musicians)
+    db.session.commit()
+    print('Seeded musicians')  
+    
 
     

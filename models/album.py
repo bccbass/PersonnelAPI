@@ -10,11 +10,12 @@ class Album(db.Model):
     title = db.Column(db.String(255), nullable=False)
     artist = db.Column(db.String(255), nullable=False)
     # artist_given_name = db.Column(db.String(100))
+    label = db.Column(db.String(100))
     release_date = db.Column(db.Date)
     genre = db.Column(db.String(100))
     img_url = db.Column(db.String)
     date_created = db.Column(db.Date(), nullable=False)
-    date_updated = db.Column(db.Date(), nullable=False)
+    last_updated = db.Column(db.Date(), nullable=False)
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
