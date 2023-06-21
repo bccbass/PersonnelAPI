@@ -92,7 +92,6 @@ capricorn = Track(
         duration = '08:29',
         date_created = date.today(),
         last_updated = date.today()
-
     ),
 sweet_pea = Track(
         album_id = 1,

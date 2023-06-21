@@ -15,7 +15,7 @@ class Track(db.Model):
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    musicians = db.relationship('Musician', secondary=track_musician, backref='tracks')
+    musicians = db.relationship('Musician', secondary=track_musician, back_populates='tracks')
 
     def __repr__(self):
         return f'<Track "{self.title}">'

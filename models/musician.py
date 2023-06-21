@@ -1,4 +1,6 @@
 from init import db, ma 
+from models.track_musician import track_musician
+
 
 
 
@@ -16,3 +18,4 @@ class Musician(db.Model):
     date_created = db.Column(db.Date(), nullable=False)
     date_updated = db.Column(db.Date(), nullable=False)
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    tracks = db.relationship('Track', secondary=track_musician, back_populates='musicians')
