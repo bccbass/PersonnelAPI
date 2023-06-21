@@ -5,7 +5,7 @@ from models.user import User
 from models.album import Album
 from models.track import Track
 from models.musician import Musician
-from models.track_musician import Track_Musician
+# from models.track_musician import Track_Musician
 from utilities import generate_pw
 
 users = [
@@ -213,204 +213,204 @@ musicians = [
     )
 ]
 
-track_musicians = [
-    # TRACK 1
-    Track_Musician(
-        track_id = 1,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 1,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 1,
-        musician_id = 3,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 1,
-        musician_id = 4,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 1,
-        musician_id = 5,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
+# track_musicians = [
+#     # TRACK 1
+#     Track_Musician(
+#         track_id = 1,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 1,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 1,
+#         musician_id = 3,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 1,
+#         musician_id = 4,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 1,
+#         musician_id = 5,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
 
-    # TRACK 2
-    Track_Musician(
-        track_id = 2,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 3,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 4,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 5,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
+#     # TRACK 2
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 3,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 4,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 5,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 2,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
 
-    # TRACK 3
-    Track_Musician(
-        track_id = 3,
-        musician_id = 4,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 3,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 3,
-        musician_id = 3,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 3,
-        musician_id = 4,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 3,
-        musician_id = 5,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
+#     # TRACK 3
+#     Track_Musician(
+#         track_id = 3,
+#         musician_id = 4,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 3,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 3,
+#         musician_id = 3,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 3,
+#         musician_id = 4,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 3,
+#         musician_id = 5,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
 
-    # TRACK 4
-    Track_Musician(
-        track_id = 4,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 4,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 4,
-        musician_id = 6,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 4,
-        musician_id = 7,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 4,
-        musician_id = 8,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
+#     # TRACK 4
+#     Track_Musician(
+#         track_id = 4,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 4,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 4,
+#         musician_id = 6,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 4,
+#         musician_id = 7,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 4,
+#         musician_id = 8,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
 
-    # TRACK 5
-    Track_Musician(
-        track_id = 5,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 5,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 5,
-        musician_id = 6,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 5,
-        musician_id = 7,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 5,
-        musician_id = 8,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
+#     # TRACK 5
+#     Track_Musician(
+#         track_id = 5,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 5,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 5,
+#         musician_id = 6,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 5,
+#         musician_id = 7,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 5,
+#         musician_id = 8,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
 
-    # TRACK 6
-        Track_Musician(
-        track_id = 6,
-        musician_id = 1,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 6,
-        musician_id = 2,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 6,
-        musician_id = 6,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 6,
-        musician_id = 7,
-        date_created = date.today(),
-        date_updated = date.today()
-    ),
-    Track_Musician(
-        track_id = 6,
-        musician_id = 8,
-        date_created = date.today(),
-        date_updated = date.today()
-    )
-]
+#     # TRACK 6
+#         Track_Musician(
+#         track_id = 6,
+#         musician_id = 1,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 6,
+#         musician_id = 2,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 6,
+#         musician_id = 6,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 6,
+#         musician_id = 7,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     ),
+#     Track_Musician(
+#         track_id = 6,
+#         musician_id = 8,
+#         date_created = date.today(),
+#         date_updated = date.today()
+#     )
+# ]
 
 
