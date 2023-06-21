@@ -2,12 +2,12 @@
 from flask import Blueprint
 
 from init import db, ma, jwt
-from blueprints.seed_data import users, albums, musicians, tracks
+from blueprints.seed_data import users, albums, musicians, tracks, track_musicians
 from models.album import Album
 from models.musician import Musician
 from models.track import Track
 from models.user import User
-from models.track_musician import track_musician
+from models.track_musician import Track_Musician
 
 cli_commands = Blueprint('db', __name__)
 
@@ -32,7 +32,7 @@ def seed_tables():
     db.session.commit()
     print('Seeded albums')    
     # Tracks
-    tracks[0].musicians.append(musicians[0])
+    # tracks[0].musicians.append(musicians[0])
 
     for i in range(len(tracks)):
         db.session.add_all(tracks[i])
@@ -43,6 +43,11 @@ def seed_tables():
     db.session.add_all(musicians)
     db.session.commit()
     print('Seeded musicians')  
+    # Track_Musician
+    db.session.query(Track_Musician).delete()
+    db.session.add_all(track_musicians)
+    db.session.commit()
+    print('Seeded track_musicians')  
     
 
     
