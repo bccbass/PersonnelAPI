@@ -2,12 +2,12 @@
 from flask import Blueprint
 
 from init import db, ma, jwt
-from blueprints.seed_data import users, albums, musicians, tracks
+from blueprints.seed_data import users, albums, musicians, tracks, track_musicians
 from models.album import Album
 from models.musician import Musician
 from models.track import Track
 from models.user import User
-# from models.track_musician import Track_Musician
+from models.track_musician import Track_Musician
 
 cli_commands = Blueprint('db', __name__)
 
@@ -46,31 +46,38 @@ def seed_tables():
 
 
 
-@cli_commands.cli.command('create_associations')
-def create_associations():
-    stmt = db.select(Track)
-    tracks = db.session.scalars(stmt)
-    stmt2 = db.select(Musician).filter_by(l_name='Davis')
-    stmt3 = db.select(Musician).filter_by(l_name='Shorter')
-    miles = db.session.scalar(stmt2)
-    wayne = db.session.scalar(stmt3)
-    print(wayne)
+# @cli_commands.cli.command('create_associations')
+# def create_associations():
+#     stmt = db.select(Track)
+#     tracks = db.session.scalars(stmt)
+#     stmt2 = db.select(Musician).filter_by(l_name='Davis')
+#     stmt3 = db.select(Musician).filter_by(l_name='Shorter')
+#     miles = db.session.scalar(stmt2)
+#     wayne = db.session.scalar(stmt3)
+#     print(wayne)
+
+
+#     miles.tracks.extend(tracks)
+#     wayne.tracks.extend(tracks)
+#     db.session.commit()
+   
+#     tracks = Track.query.all()
+#     musicians = Musician.query.all()
+
+#     print('Track1 musicians', tracks[0].musicians)
+#     print(musicians[1].tracks)
+    # Track_Musician
+    db.session.query(Track_Musician).delete()
+    db.session.add_all(track_musicians)
+    db.session.commit()
+    print('Seeded track_musicians')  
+    
 
     
-    miles.tracks.extend(tracks)
-    wayne.tracks.extend(tracks)
-    db.session.commit()
-   
+@cli_commands.cli.command('query')
+def query():
     tracks = Track.query.all()
     musicians = Musician.query.all()
 
     print('Track1 musicians', tracks[0].musicians)
-    print(musicians[1].tracks)
-    # # Track_Musician
-    # db.session.query(Track_Musician).delete()
-    # db.session.add_all(track_musicians)
-    # db.session.commit()
-    # print('Seeded track_musicians')  
-    
-
-    
+    print(musicians[7], musicians[4].tracks)
