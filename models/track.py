@@ -28,4 +28,3 @@ class TrackSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'title', 'track_number', 'duration', 'musicians', 'album')
-        ordered=True

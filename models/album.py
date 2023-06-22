@@ -26,9 +26,9 @@ class Album(db.Model):
         return f'<ALBUM "{self.artist}: {self.title}">'
 
 class AlbumSchema(ma.Schema):
-    tracks = fields.List(fields.Nested('Track', exclude=['album_id', 'date_created', 'last_updated']))
+    tracks = fields.List(fields.Nested('TrackSchema', exclude=['album']))
     class Meta:
-        fields = ('id', 'title', 'artist', 'release_date', 'genre', 'img_url')
+        fields = ('id', 'title', 'artist', 'release_date', 'genre', 'img_url', 'tracks')
 
 
 

@@ -22,8 +22,7 @@ class Musician(db.Model):
     def __repr__(self):
         return f'<Musician "{self.f_name} {self.l_name}: {self.instrument}">'
     
-class TrackSchema(ma.Schema):
+class MusicianSchema(ma.Schema):
 
     class Meta:
         fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url')
-        ordered=True
