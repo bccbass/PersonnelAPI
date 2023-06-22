@@ -46,19 +46,26 @@ def seed_tables():
 
 
 
-@cli_commands.cli.command('query')
-def query_association():
-    # stmt = db.select(Track).filter_by(title='Water Babies')
-    # waterbabies = db.session.scalar(stmt)
-    # stmt2 = db.select(Musician).filter_by(l_name='Davis')
-    # miles = db.session.scalar(stmt2)
+@cli_commands.cli.command('create_associations')
+def create_associations():
+    stmt = db.select(Track)
+    tracks = db.session.scalars(stmt)
+    stmt2 = db.select(Musician).filter_by(l_name='Davis')
+    stmt3 = db.select(Musician).filter_by(l_name='Shorter')
+    miles = db.session.scalar(stmt2)
+    wayne = db.session.scalar(stmt3)
+    print(wayne)
 
-    # waterbabies.musicians.append(miles)
-    # db.session.commit()
+    
+    miles.tracks.extend(tracks)
+    wayne.tracks.extend(tracks)
+    db.session.commit()
    
-    # tracks = Track.query.all()
+    tracks = Track.query.all()
+    musicians = Musician.query.all()
 
-    # print(tracks[0].musicians)
+    print('Track1 musicians', tracks[0].musicians)
+    print(musicians[1].tracks)
     # # Track_Musician
     # db.session.query(Track_Musician).delete()
     # db.session.add_all(track_musicians)
