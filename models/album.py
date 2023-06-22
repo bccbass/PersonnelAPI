@@ -1,4 +1,5 @@
 from init import db, ma 
+from marshmallow import fields, validates_schema
 
 
 
@@ -16,11 +17,19 @@ class Album(db.Model):
     img_url = db.Column(db.String)
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
+    
+    
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    tracks = db.relationship('Track', back_populates='album') 
 
+    def __repr__(self):
+        return f'<ALBUM "{self.artist}: {self.title}">'
 
 class AlbumSchema(ma.Schema):
+    tracks = fields.List(fields.Nested('Track', exclude=['album_id', 'date_created', 'last_updated']))
     class Meta:
         fields = ('id', 'title', 'artist', 'release_date', 'genre', 'img_url')
+
+
 
 

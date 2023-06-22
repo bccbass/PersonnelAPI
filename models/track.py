@@ -1,6 +1,6 @@
 from init import db, ma 
-# from models.track_musician import track_musician
-# from models.track_musician import track_musician
+from marshmallow import fields, validates_schema
+
 
 
 
@@ -17,6 +17,15 @@ class Track(db.Model):
     last_updated = db.Column(db.Date(), nullable=False)
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     musicians = db.relationship('Musician', secondary='track_musician', backref='tracks')
+    album = db.relationship('Album', back_populates='tracks')
 
     def __repr__(self):
         return f'<Track "{self.title}">'
+    
+class TrackSchema(ma.Schema):
+    musicians = fields.List(fields.Nested('MusicianSchema'), exclude=['birthdate', 'expiry', 'date_created', 'last_updated'])
+    album = fields.Nested('AlbumSchema', only=['title', 'artist', 'release_date'])
+
+    class Meta:
+        fields = ('id', 'title', 'track_number', 'duration', 'musicians', 'album')
+        ordered=True

@@ -79,5 +79,5 @@ def query():
     tracks = Track.query.all()
     musicians = Musician.query.all()
 
-    print('Track1 musicians', tracks[0].musicians)
-    print(musicians[7], musicians[4].tracks)
+    print(tracks[0], tracks[0].album, tracks[0].musicians)
+    print(musicians[7], musicians[7].tracks)
