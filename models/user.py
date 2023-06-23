@@ -15,3 +15,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.Date, nullable=False)
     last_updated = db.Column(db.Date, nullable=False)
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('name', 'email', 'id', 'password', 'is_admin', 'date_created', 'last_updated')
