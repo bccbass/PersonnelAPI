@@ -13,7 +13,7 @@ albums_bp = Blueprint('albums', __name__, url_prefix='/albums')
 @jwt_required()
 def get_albums():
     admin_verified()
-    stmt = db.select(Album).order_by(Album.artist)
+    stmt = db.select(Album)
     albums = db.session.scalars(stmt).all()
     return AlbumSchema(many=True).dump(albums)
 

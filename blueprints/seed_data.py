@@ -2,6 +2,7 @@ from datetime import date
 from time import time
 
 from models.user import User
+from models.artist import Artist
 from models.album import Album
 from models.track import Track
 from models.musician import Musician
@@ -27,12 +28,38 @@ users = [
     )
 ]
 
+artists = [
+    Artist(
+        surname_groupname = "Davis",
+        f_name = "Miles",
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Artist(
+        surname_groupname = "Steely Dan",
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Artist(
+        surname_groupname = "Hancock",
+        f_name = "Herbie",
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Artist(
+        surname_groupname = "Hubbard",
+        f_name = "Freddie",
+        date_created = date.today(),
+        last_updated = date.today()
+    )
+
+]
 
 
 albums = [
     Album(
     title = "Water Babies",
-    artist = "Miles Davis",
+    artist_id = 1,
     release_date = "11/2/1976",
     genre = "Post Bop",
     img_url = "https://i.discogs.com/ws-wRUxz6wzx0-CYDo7tu8JN_5yQE-j-1JRayeO0zr8/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY2ODQ2/LTEyMDkxNjgxNzUu/anBlZw.jpeg",
@@ -43,7 +70,7 @@ albums = [
     ),
     Album(
     title = "Aja",
-    artist = "Steely Dan",
+    artist_id = 2,
     release_date = "9/23/1977",
     genre = "Rock/Fusion",
     img_url = "https://i.discogs.com/3Pxzvua2yABfdbcOVeiTdXiLvIYxULvquQzSG6Cj-ak/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NDIz/MzQtMTMxOTU5NTc4/NC5qcGVn.jpeg",
@@ -54,7 +81,7 @@ albums = [
     ),
     Album(
     title = "Future Shock",
-    artist = "Herbie Hancock",
+    artist_id = 3,
     release_date = "7/1/1983",
     label = "Columbia",
     genre = "Fusion",
@@ -65,7 +92,7 @@ albums = [
     ),
     Album(
     title = "Red Clay",
-    artist = "Freddie Hubbard",
+    artist_id = 4,
     release_date = "5/1/1970",
     label = "CTI",
     genre = "Fusion",
