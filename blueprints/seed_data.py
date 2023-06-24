@@ -103,8 +103,8 @@ albums = [
     )
 ]
 
-
-water_babies = Track(
+tracks = [
+Track(
         album_id = 1,
         title = 'Water Babies',
         track_number = 1,
@@ -112,7 +112,7 @@ water_babies = Track(
         date_created = date.today(),
         last_updated = date.today()
     ),
-capricorn = Track(
+Track(
         album_id = 1,
         title = 'Capricorn',
         track_number = 2,
@@ -120,7 +120,7 @@ capricorn = Track(
         date_created = date.today(),
         last_updated = date.today()
     ),
-sweet_pea = Track(
+Track(
         album_id = 1,
         title = 'Sweet Pea',
         track_number = 3,
@@ -128,7 +128,7 @@ sweet_pea = Track(
         date_created = date.today(),
         last_updated = date.today()
     ),
-two_faced = Track(
+Track(
         album_id = 1,
         title = 'Two Faced',
         track_number = 4,
@@ -136,7 +136,7 @@ two_faced = Track(
         date_created = date.today(),
         last_updated = date.today()
     ),
-dual = Track(
+Track(
         album_id = 1,
         title = 'Dual Mr. Anthony Tillmon Williams Process',
         track_number = 5,
@@ -144,17 +144,17 @@ dual = Track(
         date_created = date.today(),
         last_updated = date.today()
     ),
-splash = Track(
+Track(
         album_id = 1,
         title = 'Splash',
         track_number = 6,
         duration = '10:05',
         date_created = date.today(),
         last_updated = date.today()
-    ),
+    )
+]
 
 
-tracks = [water_babies, capricorn, sweet_pea, two_faced, dual, splash]
 
 
 musicians = [

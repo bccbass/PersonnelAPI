@@ -63,8 +63,8 @@ def get_one_track(track_id):
 @tracks_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_track():
-    admin_verified()
-    try:
+        admin_verified()
+    # try:
         track_req = TrackSchema().load(request.json)
 
         track = Track(
@@ -79,9 +79,9 @@ def create_track():
 
         db.session.add(track)
         db.session.commit()
-        return TrackSchema(only=['track']).dump(track) 
-    except:
-        return {"error": "New tracks must have a valid title"}
+        return TrackSchema(exclude=['album']).dump(track) 
+    # except:
+    #     return {"error": "New tracks must have a valid title"}
 
 @tracks_bp.route('/<int:track_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
@@ -92,7 +92,7 @@ def update_track(track_id):
     track = db.session.scalar(stmt)
     if track:
 
-        # try:
+        try:
             track_req = TrackSchema().load(request.json)
 
  
@@ -108,11 +108,11 @@ def update_track(track_id):
             db.session.add(track)
             db.session.commit()
             return TrackSchema(exclude=['album']).dump(track) 
-        # except:
-        #     return {"error": ""}
+        except:
+            return {"error": ""}
         
-    # else:
-    #     return {'erorr': 'Album not found'}, 404
+    else:
+        return {'erorr': 'Track not found'}, 404
 
 # DELETE TRACK
 @tracks_bp.route('/<int:track_id>', methods=['DELETE'])
@@ -126,7 +126,7 @@ def delete_track(track_id):
         db.session.commit()
         return {}, 200
     else:
-        {"error": "Track not found"}
+        return {"error": "Track not found"}, 404
 
         
 
