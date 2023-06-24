@@ -5,6 +5,7 @@ from init import db, ma, bcrypt, jwt
 from blueprints.cli_bp import cli_commands
 from blueprints.albums_bp import albums_bp
 from blueprints.auth_bp import auth_bp
+from blueprints.tracks_bp import tracks_bp
 
 def create_app():
     # create instance of Flask object
@@ -25,8 +26,9 @@ def create_app():
     # Register blueprints with App object
     app.register_blueprint(cli_commands)
 
-    app.register_blueprint(albums_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(albums_bp)
+    app.register_blueprint(tracks_bp)
 
     @app.route('/')
     def index():

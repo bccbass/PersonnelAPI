@@ -11,18 +11,22 @@ albums_bp = Blueprint('albums', __name__, url_prefix='/albums')
 
 @albums_bp.route('/')
 @jwt_required()
-def get_cards():
+def get_albums():
     admin_verified()
     stmt = db.select(Album).order_by(Album.artist)
     albums = db.session.scalars(stmt).all()
     return AlbumSchema(many=True).dump(albums)
 
-@albums_bp.route('/<album_id>')
-def get_one_card(album_id):
+@albums_bp.route('/<int:album_id>')
+def get_one_album(album_id):
     stmt = db.select(Album).filter_by(id=album_id)
     album = db.session.scalar(stmt)
-    return AlbumSchema().dump(album)
-
+    if album:
+        return AlbumSchema().dump(album)
+    else:
+        return {'erorr': 'Album not found'}, 404
+    
+    
 @albums_bp.route('/', methods=['POST'])
 def create_album():
     album_req = AlbumSchema().load(request.json)
@@ -43,7 +47,7 @@ def create_album():
     return AlbumSchema().dump(album)
 
 # UPDATE ALBUM
-@albums_bp.route('/<album_id>', methods=['PUT', 'PATCH'])
+@albums_bp.route('/<int:album_id>', methods=['PUT', 'PATCH'])
 def update_album(album_id):
     album_req = AlbumSchema().load(request.json)
 
@@ -66,7 +70,7 @@ def update_album(album_id):
     return AlbumSchema().dump(album)
 
 # DELETE ALBUM
-@albums_bp.route('/<album_id>', methods=['DELETE'])
+@albums_bp.route('/<int:album_id>', methods=['DELETE'])
 def delete_album(album_id):
     stmt = db.select(Album).filter_by(id=album_id)
     album = db.session.scalar(stmt)

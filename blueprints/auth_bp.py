@@ -2,11 +2,11 @@ from datetime import timedelta, datetime, timezone
 
 from flask import request, Blueprint, abort
 from sqlalchemy.exc import IntegrityError
-from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 from init import db, bcrypt
 from models.user import User, UserSchema
-from utilities import generate_pw
+from utilities import generate_pw, admin_verified 
 
 
 
@@ -51,4 +51,26 @@ def login():
     except KeyError:
         return {'error': "Email and Password required"}, 401
     
+@auth_bp.route('/grant_admin_access/<int:user_id>', methods=['POST'])
+@jwt_required()
+def grant_admin_access(user_id):
+    admin_verified()
+    stmt = db.select(User).filter_by(id = user_id)
+    user = db.session.scalar(stmt)
+
+    if user:
+        user.is_admin = True
+        user.last_updated = datetime.now(timezone.utc)
+        db.session.commit()
+        return UserSchema().dump(user)
+    else:
+        return {'error': 'User not found'}, 404
+    
+@auth_bp.route('/')
+def show_all_users():
+    admin_verified()
+    stmt = db.select(User)
+    users = db.session.scalars(stmt)
+    
+    return UserSchema(many=True, exclude=['password']).dump(users)
 
