@@ -27,4 +27,4 @@ class TrackSchema(ma.Schema):
     musicians = fields.List(fields.Nested('MusicianSchema'), exclude=['birthdate', 'expiry', 'date_created', 'last_updated'])
     album = fields.Nested('AlbumSchema')
     class Meta:
-        fields = ('id', 'title', 'artist', 'track_number', 'duration', 'musicians', 'album')
+        fields = ('id', 'title', 'artist', 'track_number', 'duration', 'musicians', 'album_id', 'album')
