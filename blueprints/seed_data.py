@@ -5,6 +5,7 @@ from models.user import User
 from models.artist import Artist
 from models.album import Album
 from models.track import Track
+from models.instrument import Instrument
 from models.musician import Musician
 from models.track_musician import Track_Musician
 from utilities import generate_pw
@@ -30,25 +31,22 @@ users = [
 
 artists = [
     Artist(
-        surname_groupname = "Davis",
-        f_name = "Miles",
+        name = "Davis, Miles",
         date_created = date.today(),
         last_updated = date.today()
     ),
     Artist(
-        surname_groupname = "Steely Dan",
+        name = "Steely Dan",
         date_created = date.today(),
         last_updated = date.today()
     ),
     Artist(
-        surname_groupname = "Hancock",
-        f_name = "Herbie",
+        name = "Hancock, Herbie",
         date_created = date.today(),
         last_updated = date.today()
     ),
     Artist(
-        surname_groupname = "Hubbard",
-        f_name = "Freddie",
+        name = "Hubbard, Freddie",
         date_created = date.today(),
         last_updated = date.today()
     )
@@ -61,7 +59,6 @@ albums = [
     title = "Water Babies",
     artist_id = 1,
     release_date = "11/2/1976",
-    genre = "Post Bop",
     img_url = "https://i.discogs.com/ws-wRUxz6wzx0-CYDo7tu8JN_5yQE-j-1JRayeO0zr8/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY2ODQ2/LTEyMDkxNjgxNzUu/anBlZw.jpeg",
     # created_by = 0,
     label = "Columbia",
@@ -72,7 +69,6 @@ albums = [
     title = "Aja",
     artist_id = 2,
     release_date = "9/23/1977",
-    genre = "Rock/Fusion",
     img_url = "https://i.discogs.com/3Pxzvua2yABfdbcOVeiTdXiLvIYxULvquQzSG6Cj-ak/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NDIz/MzQtMTMxOTU5NTc4/NC5qcGVn.jpeg",
     # created_by = 0,
     label = "ABC",
@@ -84,7 +80,6 @@ albums = [
     artist_id = 3,
     release_date = "7/1/1983",
     label = "Columbia",
-    genre = "Fusion",
     img_url = "https://upload.wikimedia.org/wikipedia/en/e/eb/Herbie_Hancock_-_Rockit.jpg",
     # created_by = 0,
     date_created = date.today(),
@@ -95,7 +90,6 @@ albums = [
     artist_id = 4,
     release_date = "5/1/1970",
     label = "CTI",
-    genre = "Fusion",
     img_url = "",
     # created_by = 0,
     date_created = date.today(),
@@ -155,88 +149,123 @@ Track(
 ]
 
 
-
-
+instruments = [
+    Instrument(
+        name = 'Bass',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Piano',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Drums',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Trumpet',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Saxophone',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Synthesizers',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+    Instrument(
+        name = 'Guitar',
+        date_created = date.today(),
+        last_updated = date.today()
+    )
+]
 musicians = [
     Musician(
         f_name = 'Miles',
         l_name = 'Davis',
-        instrument = 'Trumpet',
+        instrument_id = 4,
         birthdate = '05/26/1926',
         expiry = '9/28/1991',
         img_url = 'https://2.bp.blogspot.com/_5VxK1gkg1U4/TVLCM0z5VdI/AAAAAAAAAU8/IbTXIR-ZiqA/s1600/milesdavis.jpg',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Wayne',
         l_name = 'Shorter',
-        instrument = 'Saxophone',
+        instrument_id = 5,
         birthdate = '8/25/1933',
         expiry = '3/2/2023',
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Herbie',
         l_name = 'Hancock',
-        instrument = 'Piano, Fender Rhodes',
+        instrument_id = 3,
         birthdate = '04/12/1940',
         
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Ron',
         l_name = 'Carter',
-        instrument = 'Bass',
+        instrument_id = 1,
         birthdate = '05/4/1937',
         
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Tony',
         l_name = 'Williams',
-        instrument = 'Drums',
+        instrument_id = 2,
         birthdate = '12/12/1945',
         expiry = '2/23/1997',
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Chick',
         l_name = 'Corea',
-        instrument = 'Piano, Fender Rhodes',
+        instrument_id = 3,
         birthdate = '6/12/1941',
         expiry = '2/9/2021',
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Dave',
         l_name = 'Holland',
-        instrument = 'Bass',
+        instrument_id = 1,
         birthdate = '10/1/1946',
         
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Musician(
         f_name = 'Jack',
         l_name = 'DeJohnette',
-        instrument = 'Drums',
+        instrument_id = 2,
         birthdate = '8/9/1942',
         
         img_url = '',
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     )
 ]
 
@@ -246,31 +275,31 @@ track_musicians = [
         track_id = 1,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 1,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 1,
         musician_id = 3,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 1,
         musician_id = 4,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 1,
         musician_id = 5,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
 
     # TRACK 2
@@ -278,37 +307,37 @@ track_musicians = [
         track_id = 2,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 2,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 2,
         musician_id = 3,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 2,
         musician_id = 4,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 2,
         musician_id = 5,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 2,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
 
     # TRACK 3
@@ -316,31 +345,31 @@ track_musicians = [
         track_id = 3,
         musician_id = 4,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 3,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 3,
         musician_id = 3,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 3,
         musician_id = 4,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 3,
         musician_id = 5,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
 
     # TRACK 4
@@ -348,31 +377,31 @@ track_musicians = [
         track_id = 4,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 4,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 4,
         musician_id = 6,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 4,
         musician_id = 7,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 4,
         musician_id = 8,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
 
     # TRACK 5
@@ -380,31 +409,31 @@ track_musicians = [
         track_id = 5,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 5,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 5,
         musician_id = 6,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 5,
         musician_id = 7,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 5,
         musician_id = 8,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
 
     # TRACK 6
@@ -412,31 +441,31 @@ track_musicians = [
         track_id = 6,
         musician_id = 1,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 6,
         musician_id = 2,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 6,
         musician_id = 6,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 6,
         musician_id = 7,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     ),
     Track_Musician(
         track_id = 6,
         musician_id = 8,
         date_created = date.today(),
-        date_updated = date.today()
+        last_updated = date.today()
     )
 ]
 

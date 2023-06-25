@@ -23,7 +23,7 @@ def get_one_album(album_id):
     if album:
         return AlbumSchema().dump(album)
     else:
-        return {'erorr': 'Album not found'}, 404
+        return {'error': 'Album not found'}, 404
     
     
 @albums_bp.route('/', methods=['POST'])
@@ -68,7 +68,9 @@ def update_album(album_id):
 
         db.session.add(album)
         db.session.commit()
-    return AlbumSchema().dump(album)
+        return AlbumSchema().dump(album)
+    else:
+        return {'error': 'Album not found'}, 404
 
 # DELETE ALBUM
 @albums_bp.route('/<int:album_id>', methods=['DELETE'])
@@ -77,6 +79,9 @@ def delete_album(album_id):
     admin_verified()
     stmt = db.select(Album).filter_by(id=album_id)
     album = db.session.scalar(stmt)
-    db.session.delete(album)
-    db.session.commit()
-    return {}, 200
+    if album:
+        db.session.delete(album)
+        db.session.commit()
+        return {}, 200
+    else:
+        return {'error': 'Album not found'}, 404

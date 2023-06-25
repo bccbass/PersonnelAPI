@@ -1,8 +1,8 @@
 from init import db, ma
 from marshmallow import fields, validates_schema
 
-class Artist(db.Model):
-    __tablename__ = 'artists'
+class Instrument(db.Model):
+    __tablename__ = 'instruments'
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -10,14 +10,10 @@ class Artist(db.Model):
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
 
-    albums = db.relationship('Album', back_populates='artist')
-
     def __repr__(self):
-        return f'<Artist "{self.name}">'
+        return f'<Instrument "{self.name}">'
 
 class ArtistSchema(ma.Schema):
-    albums = fields.List(fields.Nested('AlbumSchema'), only='title')
 
     class Meta: 
-        fields = ('name', 'albums')
-
+        fields = ('name', 'date_created', 'last_updated')
