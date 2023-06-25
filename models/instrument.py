@@ -13,7 +13,8 @@ class Instrument(db.Model):
     def __repr__(self):
         return f'<Instrument "{self.name}">'
 
-class ArtistSchema(ma.Schema):
+    
+class InstrumentSchema(ma.Schema):
 
     class Meta: 
         fields = ('name', 'date_created', 'last_updated')

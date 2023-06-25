@@ -333,17 +333,11 @@ track_musicians = [
         date_created = date.today(),
         last_updated = date.today()
     ),
-    Track_Musician(
-        track_id = 2,
-        musician_id = 1,
-        date_created = date.today(),
-        last_updated = date.today()
-    ),
 
     # TRACK 3
     Track_Musician(
         track_id = 3,
-        musician_id = 4,
+        musician_id = 1,
         date_created = date.today(),
         last_updated = date.today()
     ),

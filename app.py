@@ -6,6 +6,7 @@ from blueprints.cli_bp import cli_commands
 from blueprints.albums_bp import albums_bp
 from blueprints.auth_bp import auth_bp
 from blueprints.tracks_bp import tracks_bp
+from blueprints.musicians_bp import musicians_bp
 
 def create_app():
     # create instance of Flask object
@@ -29,6 +30,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(albums_bp)
     app.register_blueprint(tracks_bp)
+    app.register_blueprint(musicians_bp)
 
     @app.route('/')
     def index():

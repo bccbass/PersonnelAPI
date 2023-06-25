@@ -7,7 +7,7 @@ from models.album import Album, AlbumSchema
 from models.track import Track, TrackSchema
 from utilities import admin_verified   
 
-global_bp = Blueprint('global', __name__, url_prefix='global')
+global_bp = Blueprint('global', __name__, url_prefix='/global')
 
 
 # THIS SHOULD BE AN EXTENDED ROUTE AS IT HAS MULTIFUNCTIONAL THINGS HAPPENING

@@ -4,7 +4,6 @@ from flask import Blueprint, request
 from flask_jwt_extended import jwt_required
 
 from init import db, ma
-from models.album import Album, AlbumSchema
 from models.track import Track, TrackSchema
 from utilities import admin_verified
 
@@ -38,12 +37,12 @@ def create_track():
                 album_id=track_req.get('album_id', None),
                 duration=track_req.get('duration', None),
                 date_created=datetime.now(timezone.utc),
-                last_updated=datetime.now(timezone.utc),
+                last_updated=datetime.now(timezone.utc)
                 )
 
         db.session.add(track)
         db.session.commit()
-        return TrackSchema(exclude=['album']).dump(track) 
+        return TrackSchema(exclude=['album']).dump(track), 201
     except:
         return {"error": "New tracks must have a valid title"}
 
@@ -63,9 +62,8 @@ def update_track(track_id):
             # artist=track_req['artist'],
             track.title=track_req.get('title')
             track.album_id=track_req.get('album_id', track.album_id)
-            track.track_number=track_req.get('track_number', None)
-            track.duration=track_req.get('duration', None)
-            track.date_created=datetime.now(timezone.utc)
+            track.track_number=track_req.get('track_number', track.track_number)
+            track.duration=track_req.get('duration', track.duration)
             track.last_updated=datetime.now(timezone.utc)
                     
 

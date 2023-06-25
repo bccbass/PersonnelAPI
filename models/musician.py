@@ -18,11 +18,11 @@ class Musician(db.Model):
     last_updated = db.Column(db.Date(), nullable=False)
     # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     # tracks = db.relationship('Track', secondary=track_musician, backref='musicians')
-    # instrument = db.relationship('Instrument')
+    instrument = db.relationship('Instrument')
     def __repr__(self):
         return f'<Musician "{self.f_name} {self.l_name}: {self.instrument}">'
     
 class MusicianSchema(ma.Schema):
     instrument = fields.Nested('InstrumentSchema', only=['name'])
     class Meta:
-        fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url')
+        fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url', 'instrument_id')
