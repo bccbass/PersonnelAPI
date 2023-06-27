@@ -28,7 +28,7 @@ class AlbumSchema(ma.Schema):
     artist = fields.Nested('ArtistSchema', only=['name', 'id'])
     class Meta:
         fields = ('id', 'title', 'artist', 'release_date', 'img_url', 'tracks', 'label')
-
+        ordered=True
 
 
 

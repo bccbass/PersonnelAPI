@@ -18,6 +18,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URI')
     # JWT secret key
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
+    # Allow for definable sort order of Schemas
+    app.config['JSON_SORT_KEYS'] = False
 
     # Pass in app object to all instances of modules
     db.init_app(app)
@@ -34,8 +36,13 @@ def create_app():
     app.register_blueprint(musicians_bp)
     app.register_blueprint(artists_bp)
 
-    @app.route('/')
-    def index():
-        return 'HI'
+    @app.errorhandler(404)
+    def handle_404(err):
+        return {'error': str(err)}, 404
+
+    @app.errorhandler(401)
+    def handle_404(err):
+        return {'error': str(err)}, 401
+
     return app
 

@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 
 from init import db, bcrypt
 from models.user import User, UserSchema
-from utilities import generate_pw, admin_verified 
+from utilities import generate_pw, admin_verified, locate_record
 
 
 
@@ -44,7 +44,6 @@ def login():
 
         if user and bcrypt.check_password_hash(user.password, user_req['password']):
             token = create_access_token(identity=user.id, expires_delta=timedelta(days=30))
-            print(token)
             return {'user': user.name, 'token': token} 
         else:
             return {"error": "Invalid email or password" }, 401
@@ -55,18 +54,16 @@ def login():
 @jwt_required()
 def grant_admin_access(user_id):
     admin_verified()
-    stmt = db.select(User).filter_by(id = user_id)
-    user = db.session.scalar(stmt)
+    user = locate_record(User, user_id)
 
-    if user:
-        user.is_admin = True
-        user.last_updated = datetime.now(timezone.utc)
-        db.session.commit()
-        return UserSchema().dump(user)
-    else:
-        return {'error': 'User not found'}, 404
+    user.is_admin = True
+    user.last_updated = datetime.now(timezone.utc)
+    db.session.commit()
+    return UserSchema().dump(user)
+
     
 @auth_bp.route('/')
+@jwt_required()
 def show_all_users():
     admin_verified()
     stmt = db.select(User)

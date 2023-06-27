@@ -20,4 +20,5 @@ class ArtistSchema(ma.Schema):
 
     class Meta: 
         fields = ('id', 'name', 'albums')
+        ordered = True
 

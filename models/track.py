@@ -28,4 +28,5 @@ class TrackSchema(ma.Schema):
     album = fields.Nested('AlbumSchema', only=['id', 'title'])
     artist = fields.Nested('ArtistSchema', only=['id', 'name'])
     class Meta:
-        fields = ('id', 'title', 'artist', 'track_number', 'duration', 'musicians', 'album_id', 'album')
+        fields = ('id', 'title', 'artist', 'album', 'duration', 'track_number', 'musicians' )
+        ordered=True

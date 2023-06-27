@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.artist import Artist, ArtistSchema
-from utilities import admin_verified
+from utilities import admin_verified, locate_record
 
 artists_bp = Blueprint('artists', __name__, url_prefix='/artists')
 
@@ -21,12 +21,9 @@ def get_artists():
 @jwt_required()
 def get_one_artist(artist_id):
     
-    stmt = db.select(Artist).filter_by(id=artist_id)
-    artist = db.session.scalar(stmt)
-    if artist:
-        return ArtistSchema().dump(artist)
-    else:
-        return {'error': 'Artist not found'}, 404
+    artist = locate_record(Artist, artist_id)
+    return ArtistSchema().dump(artist)
+
 
 # CREATE
 
@@ -50,41 +47,32 @@ def create_artist():
     except:
         return {"error": "New artist must have a valid name"}
 
+# UPDATE ARTIST
 @artists_bp.route('/<int:artist_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_artist(artist_id):
     admin_verified()
-    stmt = db.select(Artist).filter_by(id=artist_id)
-    artist = db.session.scalar(stmt)
-    if artist:
-        try:
-            artist_req = ArtistSchema().load(request.json)
+    artist = locate_record(Artist, artist_id)
 
-            artist.name=artist_req.get('name', artist.name)
-            artist.last_updated=datetime.now(timezone.utc)
+    artist_req = ArtistSchema().load(request.json)
+
+    artist.name=artist_req.get('name', artist.name)
+    artist.last_updated=datetime.now(timezone.utc)
                     
-            db.session.add(artist)
-            db.session.commit()
-            return ArtistSchema(exclude=['albums']).dump(artist) 
-        except:
-            return {"error": ""}
-        
-    else:
-        return {'erorr': 'Artist not found'}, 404
+    db.session.add(artist)
+    db.session.commit()
+    return ArtistSchema(exclude=['albums']).dump(artist) 
+
 
 # DELETE ARTIST
 @artists_bp.route('/<int:artist_id>', methods=['DELETE'])
 @jwt_required()
 def delete_artist(artist_id):
     admin_verified()
-    stmt = db.select(Artist).filter_by(id=artist_id)
-    artist = db.session.scalar(stmt)
-    if artist:
-        db.session.delete(artist)
-        db.session.commit()
-        return {}, 200
-    else:
-        return {"error": "Artist not found"}, 404
+    artist = locate_record(Artist, artist_id)
+    db.session.delete(artist)
+    db.session.commit()
+    return {}, 200
 
         
 
