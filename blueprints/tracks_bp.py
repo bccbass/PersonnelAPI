@@ -19,19 +19,19 @@ def get_one_track(track_id):
     if track:
         return TrackSchema().dump(track)
     else:
-        return {'erorr': 'Album not found'}, 404
+        return {'error': 'Track not found'}, 404
 
 # CREATE
 
 @tracks_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_track():
-    admin_verified()
-    try:
+    # admin_verified()
+    # try:
         track_req = TrackSchema().load(request.json)
 
         track = Track(
-                # artist=track_req['artist'],
+                artist_id=track_req['artist_id'],
                 title=track_req['title'],
                 track_number=track_req.get('track_number', None),
                 album_id=track_req.get('album_id', None),
@@ -42,24 +42,20 @@ def create_track():
 
         db.session.add(track)
         db.session.commit()
-        return TrackSchema(exclude=['album']).dump(track), 201
-    except:
-        return {"error": "New tracks must have a valid title"}
+        return TrackSchema().dump(track), 201
+    # except:
+    #     return {"error": "New tracks must have a valid title"}
 
 @tracks_bp.route('/<int:track_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_track(track_id):
     admin_verified()
-
     stmt = db.select(Track).filter_by(id=track_id)
     track = db.session.scalar(stmt)
     if track:
-
         try:
             track_req = TrackSchema().load(request.json)
-
- 
-            # artist=track_req['artist'],
+            track.artist_id=track_req['artist_id'],
             track.title=track_req.get('title')
             track.album_id=track_req.get('album_id', track.album_id)
             track.track_number=track_req.get('track_number', track.track_number)

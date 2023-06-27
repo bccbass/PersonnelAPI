@@ -100,6 +100,7 @@ albums = [
 tracks = [
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Water Babies',
         track_number = 1,
         duration = '05:08',
@@ -108,6 +109,7 @@ Track(
     ),
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Capricorn',
         track_number = 2,
         duration = '08:29',
@@ -116,6 +118,7 @@ Track(
     ),
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Sweet Pea',
         track_number = 3,
         duration = '08:02',
@@ -124,6 +127,7 @@ Track(
     ),
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Two Faced',
         track_number = 4,
         duration = '18:02',
@@ -132,6 +136,7 @@ Track(
     ),
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Dual Mr. Anthony Tillmon Williams Process',
         track_number = 5,
         duration = '13:22',
@@ -140,6 +145,7 @@ Track(
     ),
 Track(
         album_id = 1,
+        artist = artists[0],
         title = 'Splash',
         track_number = 6,
         duration = '10:05',

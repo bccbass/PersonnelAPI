@@ -9,15 +9,15 @@ class Artist(db.Model):
     name = db.Column(db.String(160), nullable=False)
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
-
-    albums = db.relationship('Album', back_populates='artist')
+    albums = db.relationship('Album', back_populates='artist', cascade='all, delete')
 
     def __repr__(self):
         return f'<Artist "{self.name}">'
 
 class ArtistSchema(ma.Schema):
+    
     albums = fields.List(fields.Nested('AlbumSchema'), only='title')
 
     class Meta: 
-        fields = ('name', 'albums')
+        fields = ('id', 'name', 'albums')
 

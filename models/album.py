@@ -17,7 +17,6 @@ class Album(db.Model):
     last_updated = db.Column(db.Date(), nullable=False)
     
     
-    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     artist = db.relationship('Artist', back_populates='albums')
     tracks = db.relationship('Track', back_populates='album') 
 
@@ -25,8 +24,8 @@ class Album(db.Model):
         return f'<ALBUM "{self.title}">'
 
 class AlbumSchema(ma.Schema):
-    tracks = fields.List(fields.Nested('TrackSchema', exclude=['album']))
-    artist = fields.Nested('ArtistSchema', only=['name'])
+    tracks = fields.List(fields.Nested('TrackSchema', only=['title', 'musicians']))
+    artist = fields.Nested('ArtistSchema', only=['name', 'id'])
     class Meta:
         fields = ('id', 'title', 'artist', 'release_date', 'img_url', 'tracks', 'label')
 
