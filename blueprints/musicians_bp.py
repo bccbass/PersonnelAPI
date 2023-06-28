@@ -9,17 +9,22 @@ from utilities import admin_verified, locate_record
 
 musicians_bp = Blueprint('musicians', __name__, url_prefix='/musicians')
 
+
+# READ ALL MUSICIANS:
+@musicians_bp.route('/')
+def get_musicians():
+    stmt = db.select(Musician)
+    musicians = db.session.scalars(stmt)
+    return MusicianSchema(many=True, only=['f_name', 'l_name', 'instrument']).dump(musicians)
+
 # READ ONE MUSICIAN:
 @musicians_bp.route('/<int:musician_id>')
 @jwt_required()
 def get_one_musician(musician_id):
-    stmt = db.select(Musician).filter_by(id=musician_id)
-    musician = db.session.scalar(stmt)
-    if musician:
-        return MusicianSchema(exclude=['instrument_id']).dump(musician)
-    else:
-        return {'error': 'Musician not found'}
-    
+    musician = locate_record(Musician, musician_id)
+    return MusicianSchema(exclude=['instrument_id']).dump(musician)
+
+# CREATE A NEW MUSICIAN:
 @musicians_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_musician():
@@ -31,6 +36,7 @@ def create_musician():
     existing_musician = db.session.scalar(stmt)
     if existing_musician:
         return {'error': 'Musician already exists'}
+    
     else: 
             musician = Musician(
             f_name = musician_req['f_name'],
@@ -48,14 +54,13 @@ def create_musician():
 
             return MusicianSchema().dump(musician), 201
 
-# UPDATE:
+# UPDATE MUSICIAN:
 @musicians_bp.route('/<int:musician_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_musician(musician_id):
     admin_verified()
     musician_req = MusicianSchema().load(request.json)
 
-    # check if musician already exists:
     musician = locate_record(Musician, musician_id)
 
     musician.f_name = musician_req.get('f_name', musician.f_name)
@@ -72,17 +77,15 @@ def update_musician(musician_id):
     return MusicianSchema().dump(musician), 201
 
 
-# DELETE
+# DELETE MUSICIAN:
 @musicians_bp.route('/<int:musician_id>', methods=['DELETE'])
 @jwt_required()
 def delete_musician(musician_id):
     admin_verified()
-    stmt = db.select(Musician).filter_by(id=musician_id)
-    musician = db.session.scalar(stmt)
-    if musician:
-        db.session.delete(musician)
-        db.session.commit()
-        return {}, 200
-    else:
-        return {'error': 'Musician not found'}, 404
+    musician = locate_record(Musician, musician_id)
+
+    db.session.delete(musician)
+    db.session.commit()
+    return {}, 200
+
         

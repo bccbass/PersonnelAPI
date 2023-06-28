@@ -2,8 +2,8 @@ from datetime import datetime, timezone
 
 from init import db, ma 
 from marshmallow import fields
-from marshmallow.validate import Length 
-
+from marshmallow.validate import Length, And, Regexp
+from utilities import char_value
 
 
 
@@ -27,16 +27,21 @@ class Musician(db.Model):
     
 class MusicianSchema(ma.Schema):
     # Validators:
-    f_name = fields.String(validate=Length(min=1, max=80))
-    l_name = fields.String(validate=Length(min=1, max=80))
+    f_name = fields.String(validate=And(
+        Length(min=1, max=80),
+        Regexp(char_value, error='Letters, numbers and spaces only are allowed')))
+    l_name = fields.String(validate=And(
+        Length(min=1, max=80),
+        Regexp(char_value, error='Letters, numbers and spaces only are allowed')))
     instrument_id= fields.Int()
     birthdate = fields.Date()
     expiry = fields.Date()
-    img_url = fields.String()
+    img_url = fields.Url()
     date_created = fields.Date()
     last_updated = fields.Date()
 
+    tracks = fields.List(fields.Nested('TrackSchema', exclude=['musicians']))
     instrument = fields.Nested('InstrumentSchema', only=['name'])
     class Meta:
-        fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url', 'instrument_id')
+        fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url', 'instrument_id', 'tracks')
         ordered = True
