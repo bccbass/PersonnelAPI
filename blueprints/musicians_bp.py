@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.musician import Musician, MusicianSchema
-from utilities import admin_verified, locate_record
+from utilities import admin_verified, locate_record, preexisting_record
 
 musicians_bp = Blueprint('musicians', __name__, url_prefix='/musicians')
 
@@ -33,10 +33,7 @@ def create_musician():
 
     # check if musician already exists:
     stmt = db.select(Musician).filter_by(f_name=musician_req['f_name'], l_name=musician_req['l_name'])
-    existing_musician = db.session.scalar(stmt)
-    if existing_musician:
-        abort(400, description="Musician already exists")
-    
+    preexisting_record(stmt)    
 
     musician = Musician(
     f_name = musician_req['f_name'],

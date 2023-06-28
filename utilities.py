@@ -29,4 +29,9 @@ def admin_verified():
     if not (user and user.is_admin):
         abort(401, description="Invalid credentials")
 
+def preexisting_record(stmt):
+    existing_album = db.session.scalar(stmt)
+    if existing_album:
+        abort(400, description="Album already exists")
+
 char_value = '^[a-zA-Z0-9 ]+$'

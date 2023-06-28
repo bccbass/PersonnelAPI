@@ -1,6 +1,6 @@
 from init import db, ma 
-from marshmallow import fields, validates_schema
-
+from marshmallow import fields
+from marshmallow.validate import Length
 
 
 
@@ -24,10 +24,21 @@ class Album(db.Model):
         return f'<ALBUM "{self.title}">'
 
 class AlbumSchema(ma.Schema):
-    tracks = fields.List(fields.Nested('TrackSchema', only=['title', 'musicians']))
+    # Validators
+    title = fields.String(validate=Length(min=1, max=180))
+    artist_id = fields.Integer()
+    release_date = fields.Date()
+    label = fields.String(validate=Length(min=1, max=100))
+    img_url = fields.Url()
+    date_created = fields.Date()
+    last_updated = fields.Date()
+
+    # Nested Fields
+    tracks = fields.List(fields.Nested('TrackSchema', only=['track_number', 'title']))
     artist = fields.Nested('ArtistSchema', only=['name', 'id'])
+    
     class Meta:
-        fields = ('id', 'title', 'artist', 'release_date', 'img_url', 'tracks', 'label')
+        fields = ('id', 'title', 'artist', 'artist_id', 'release_date', 'img_url', 'label', 'tracks')
         ordered=True
 
 

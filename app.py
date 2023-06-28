@@ -2,6 +2,7 @@ from os import environ
 
 from flask import Flask
 from marshmallow.exceptions import ValidationError
+from sqlalchemy.exc import IntegrityError
 
 from init import db, ma, bcrypt, jwt
 from blueprints.cli_bp import cli_commands
@@ -59,10 +60,10 @@ def create_app():
     def handle_ValidationError(err):
         return {"error": err.__dict__['messages']}, 400
 
-    # Handle missing recquired fields
-    # @app.errorhandler(KeyError)
-    # def handle_KeyError(err):
-    #     return {"error": f'{str(err)} is required'}, 400
+    # Handle Integrity errors when UNIQUE FIELD is violated
+    @app.errorhandler(IntegrityError)
+    def handle_IntegrityError(err):
+        return {"error": str(err)}, 400
 
     return app
 

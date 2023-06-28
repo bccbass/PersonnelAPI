@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.artist import Artist, ArtistSchema
-from utilities import admin_verified, locate_record
+from utilities import admin_verified, locate_record, preexisting_record
 
 artists_bp = Blueprint('artists', __name__, url_prefix='/artists')
 
@@ -34,9 +34,7 @@ def create_artist():
 
     # Check Artist doesn't already exist:
     stmt = db.select(Artist).filter_by(name=artist_req['name'])
-    existing_artist = db.session.scalar(stmt)
-    if existing_artist:
-        abort(400, description="Artist already exists")
+    preexisting_record(stmt)
 
     artist = Artist(
             name=artist_req['name'],

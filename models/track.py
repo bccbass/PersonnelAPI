@@ -1,5 +1,6 @@
 from init import db, ma 
-from marshmallow import fields, validates_schema
+from marshmallow import fields
+from marshmallow.validate import Length
 
 
 
@@ -12,7 +13,7 @@ class Track(db.Model):
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id', ondelete='CASCADE'))
     album_id = db.Column(db.Integer, db.ForeignKey('albums.id', ondelete='CASCADE'))
     title = db.Column(db.String(255), nullable=False)
-    track_number = db.Column(db.Integer, unique=True)
+    track_number = db.Column(db.Integer)
     duration = db.Column(db.String(12))
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
@@ -24,9 +25,17 @@ class Track(db.Model):
         return f'<Track "{self.title}">'
     
 class TrackSchema(ma.Schema):
-    musicians = fields.List(fields.Nested('MusicianSchema'), exclude=['birthdate', 'expiry', 'date_created', 'last_updated'])
+    # Validators
+    artist_id = fields.Integer()
+    album_id = fields.Integer()
+    track_number = fields.Integer()
+    # duration = fields.Time()
+    
+
+
+    musicians = fields.List(fields.Nested('MusicianSchema'), exclude=['tracks'])
     album = fields.Nested('AlbumSchema', only=['id', 'title'])
     artist = fields.Nested('ArtistSchema', only=['id', 'name'])
     class Meta:
-        fields = ('id', 'title', 'artist', 'album', 'duration', 'track_number', 'musicians' )
+        fields = ('id', 'title', 'artist', 'artist_id', 'album', 'album_id' 'duration', 'track_number', 'musicians' )
         ordered=True

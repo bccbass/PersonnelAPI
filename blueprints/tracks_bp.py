@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.track import Track, TrackSchema
-from utilities import admin_verified
+from utilities import admin_verified, locate_record, preexisting_record
 
 tracks_bp = Blueprint('tracks', __name__, url_prefix='/tracks')
 
@@ -13,78 +13,62 @@ tracks_bp = Blueprint('tracks', __name__, url_prefix='/tracks')
 @tracks_bp.route('/<int:track_id>')
 @jwt_required()
 def get_one_track(track_id):
-    
-    stmt = db.select(Track).filter_by(id=track_id)
-    track = db.session.scalar(stmt)
-    if track:
-        return TrackSchema().dump(track)
-    else:
-        return {'error': 'Track not found'}, 404
+    track = locate_record(Track, track_id)
+    return TrackSchema(exclude=['musicians.tracks']).dump(track)
 
-# CREATE
-
+# CREATE TRACK:
 @tracks_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_track():
-    # admin_verified()
-    # try:
-        track_req = TrackSchema().load(request.json)
+    admin_verified()
+    track_req = TrackSchema().load(request.json)
 
-        track = Track(
-                artist_id=track_req['artist_id'],
-                title=track_req['title'],
-                track_number=track_req.get('track_number', None),
-                album_id=track_req.get('album_id', None),
-                duration=track_req.get('duration', None),
-                date_created=datetime.now(timezone.utc),
-                last_updated=datetime.now(timezone.utc)
-                )
+    track = Track(
+            artist_id=track_req['artist_id'],
+            title=track_req['title'],
+            track_number=track_req.get('track_number', None),
+            album_id=track_req.get('album_id', None),
+            duration=track_req.get('duration', None),
+            date_created=datetime.now(timezone.utc),
+            last_updated=datetime.now(timezone.utc)
+            )
 
-        db.session.add(track)
-        db.session.commit()
-        return TrackSchema().dump(track), 201
-    # except:
-    #     return {"error": "New tracks must have a valid title"}
+    db.session.add(track)
+    db.session.commit()
+    return TrackSchema().dump(track), 201
 
+# UPDATE TRACK 
 @tracks_bp.route('/<int:track_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_track(track_id):
     admin_verified()
-    stmt = db.select(Track).filter_by(id=track_id)
-    track = db.session.scalar(stmt)
-    if track:
-        try:
-            track_req = TrackSchema().load(request.json)
-            track.artist_id=track_req['artist_id'],
-            track.title=track_req.get('title')
-            track.album_id=track_req.get('album_id', track.album_id)
-            track.track_number=track_req.get('track_number', track.track_number)
-            track.duration=track_req.get('duration', track.duration)
-            track.last_updated=datetime.now(timezone.utc)
+    track = locate_record(Track, track_id)
+    
+    track_req = TrackSchema().load(request.json)
+    
+    track.artist_id=track_req.get('artist_id', track.artist_id),
+    track.title=track_req.get('title')
+    track.album_id=track_req.get('album_id', track.album_id)
+    track.track_number=track_req.get('track_number', track.track_number)
+    track.duration=track_req.get('duration', track.duration)
+    track.last_updated=datetime.now(timezone.utc)
                     
 
-            db.session.add(track)
-            db.session.commit()
-            return TrackSchema(exclude=['album']).dump(track) 
-        except:
-            return {"error": ""}
-        
-    else:
-        return {'erorr': 'Track not found'}, 404
+    db.session.add(track)
+    db.session.commit()
+    return TrackSchema(exclude=['album', 'musicians.tracks']).dump(track) 
+
 
 # DELETE TRACK
 @tracks_bp.route('/<int:track_id>', methods=['DELETE'])
 @jwt_required()
 def delete_track(track_id):
     admin_verified()
-    stmt = db.select(Track).filter_by(id=track_id)
-    track = db.session.scalar(stmt)
-    if track:
-        db.session.delete(track)
-        db.session.commit()
-        return {}, 200
-    else:
-        return {"error": "Track not found"}, 404
+    track = locate_record(Track, track_id)
+    db.session.delete(track)
+    db.session.commit()
+    return {}, 200
+
 
         
 

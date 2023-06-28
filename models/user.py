@@ -11,7 +11,6 @@ class User(db.Model):
     name = db.Column(db.String)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
-    # create user role:
     is_admin = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.Date, nullable=False)
     last_updated = db.Column(db.Date, nullable=False)
