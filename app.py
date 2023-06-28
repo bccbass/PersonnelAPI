@@ -49,6 +49,11 @@ def create_app():
     def handle_401(err):
         return {'error': str(err)}, 401
 
+    # Handle Pre-existing record errors
+    @app.errorhandler(400)
+    def handle_400(err):
+        return {'error': str(err)}, 400
+
     # Handle schema validation errors
     @app.errorhandler(ValidationError)
     def handle_ValidationError(err):

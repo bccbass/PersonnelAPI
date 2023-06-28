@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_jwt_extended import jwt_required
 
 from init import db, ma
@@ -35,24 +35,24 @@ def create_musician():
     stmt = db.select(Musician).filter_by(f_name=musician_req['f_name'], l_name=musician_req['l_name'])
     existing_musician = db.session.scalar(stmt)
     if existing_musician:
-        return {'error': 'Musician already exists'}
+        abort(400, description="Musician already exists")
     
-    else: 
-            musician = Musician(
-            f_name = musician_req['f_name'],
-            l_name = musician_req['l_name'],
-            instrument_id = musician_req.get('instrument_id', 8),
-            birthdate = musician_req.get('birthdate', None),
-            expiry = musician_req.get('expiry', None),
-            img_url = musician_req.get('img_url', None),
-            date_created=datetime.now(timezone.utc),
-            last_updated=datetime.now(timezone.utc)
-            )
 
-            db.session.add(musician)
-            db.session.commit()
+    musician = Musician(
+    f_name = musician_req['f_name'],
+    l_name = musician_req['l_name'],
+    instrument_id = musician_req.get('instrument_id', 8),
+    birthdate = musician_req.get('birthdate', None),
+    expiry = musician_req.get('expiry', None),
+    img_url = musician_req.get('img_url', None),
+    date_created=datetime.now(timezone.utc),
+    last_updated=datetime.now(timezone.utc)
+    )
 
-            return MusicianSchema().dump(musician), 201
+    db.session.add(musician)
+    db.session.commit()
+
+    return MusicianSchema().dump(musician), 201
 
 # UPDATE MUSICIAN:
 @musicians_bp.route('/<int:musician_id>', methods=['PUT', 'PATCH'])

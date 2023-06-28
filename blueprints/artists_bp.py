@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_jwt_extended import jwt_required
 
 from init import db, ma
@@ -14,7 +14,7 @@ artists_bp = Blueprint('artists', __name__, url_prefix='/artists')
 def get_artists():
     stmt = db.select(Artist)
     artists = db.session.scalars(stmt)
-    return ArtistSchema(many=True).dump(artists)
+    return ArtistSchema(many=True, exclude=['albums.artist', 'albums.tracks']).dump(artists)
 
 # READ ONE ARTIST:
 @artists_bp.route('/<int:artist_id>')
@@ -24,13 +24,19 @@ def get_one_artist(artist_id):
     return ArtistSchema().dump(artist)
 
 
-# CREATE
+# CREATE ARTIST
 @artists_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_artist():
     admin_verified()
 
     artist_req = ArtistSchema().load(request.json)
+
+    # Check Artist doesn't already exist:
+    stmt = db.select(Artist).filter_by(name=artist_req['name'])
+    existing_artist = db.session.scalar(stmt)
+    if existing_artist:
+        abort(400, description="Artist already exists")
 
     artist = Artist(
             name=artist_req['name'],
