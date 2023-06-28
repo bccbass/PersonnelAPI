@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.musician import Musician, MusicianSchema
-from utilities import admin_verified
+from utilities import admin_verified, locate_record
 
 musicians_bp = Blueprint('musicians', __name__, url_prefix='/musicians')
 
@@ -16,7 +16,7 @@ def get_one_musician(musician_id):
     stmt = db.select(Musician).filter_by(id=musician_id)
     musician = db.session.scalar(stmt)
     if musician:
-        return MusicianSchema().dump(musician)
+        return MusicianSchema(exclude=['instrument_id']).dump(musician)
     else:
         return {'error': 'Musician not found'}
     
@@ -32,11 +32,10 @@ def create_musician():
     if existing_musician:
         return {'error': 'Musician already exists'}
     else: 
-        try:
             musician = Musician(
             f_name = musician_req['f_name'],
             l_name = musician_req['l_name'],
-            instrument_id = musician_req['instrument_id'],
+            instrument_id = musician_req.get('instrument_id', 8),
             birthdate = musician_req.get('birthdate', None),
             expiry = musician_req.get('expiry', None),
             img_url = musician_req.get('img_url', None),
@@ -49,9 +48,6 @@ def create_musician():
 
             return MusicianSchema().dump(musician), 201
 
-        except:
-            return {'error': ''}, 409
-
 # UPDATE:
 @musicians_bp.route('/<int:musician_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
@@ -60,28 +56,21 @@ def update_musician(musician_id):
     musician_req = MusicianSchema().load(request.json)
 
     # check if musician already exists:
-    stmt = db.select(Musician).filter_by(id=musician_id)
-    musician = db.session.scalar(stmt)
-    if musician:
-        try:
- 
-            musician.f_name = musician_req.get('f_name', musician.f_name)
-            musician.l_name = musician_req.get('l_name', musician.l_name)
-            musician.instrument_id = musician_req.get('instrument_id', musician.instrument_id)
-            musician.birthdate = musician_req.get('birthdate', musician.birthdate)
-            musician.expiry = musician_req.get('expiry', musician.expiry)
-            musician.img_url = musician_req.get('img_url', musician.img_url)
-            musician.last_updated=datetime.now(timezone.utc)
+    musician = locate_record(Musician, musician_id)
+
+    musician.f_name = musician_req.get('f_name', musician.f_name)
+    musician.l_name = musician_req.get('l_name', musician.l_name)
+    musician.instrument_id = musician_req.get('instrument_id', musician.instrument_id)
+    musician.birthdate = musician_req.get('birthdate', musician.birthdate)
+    musician.expiry = musician_req.get('expiry', musician.expiry)
+    musician.img_url = musician_req.get('img_url', musician.img_url)
+    musician.last_updated=datetime.now(timezone.utc)
          
-            db.session.add(musician)
-            db.session.commit()
+    db.session.add(musician)
+    db.session.commit()
 
-            return MusicianSchema().dump(musician), 201
+    return MusicianSchema().dump(musician), 201
 
-        except:
-            return {'error': ''}, 409
-    else:
-        return {'error': 'Musician not found'}
 
 # DELETE
 @musicians_bp.route('/<int:musician_id>', methods=['DELETE'])

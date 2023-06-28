@@ -1,5 +1,9 @@
+from datetime import datetime, timezone
+
 from init import db, ma
 from marshmallow import fields, validates_schema
+from marshmallow.validate import Length
+
 
 class Artist(db.Model):
     __tablename__ = 'artists'
@@ -16,7 +20,11 @@ class Artist(db.Model):
 
 class ArtistSchema(ma.Schema):
     
-    albums = fields.List(fields.Nested('AlbumSchema'), only='title')
+    albums = fields.List(fields.Nested('AlbumSchema'), only=['title'])
+    # Validators
+    name = fields.String(required=True, validate=Length(min=1, max=80))
+    date_created = fields.Date(load_default=datetime.now(timezone.utc))
+    last_updated = fields.Date(load_default=datetime.now(timezone.utc))
 
     class Meta: 
         fields = ('id', 'name', 'albums')

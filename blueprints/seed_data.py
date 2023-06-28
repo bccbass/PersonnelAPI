@@ -162,12 +162,12 @@ instruments = [
         last_updated = date.today()
     ),
     Instrument(
-        name = 'Piano',
+        name = 'Drums',
         date_created = date.today(),
         last_updated = date.today()
     ),
     Instrument(
-        name = 'Drums',
+        name = 'Piano',
         date_created = date.today(),
         last_updated = date.today()
     ),
@@ -188,6 +188,11 @@ instruments = [
     ),
     Instrument(
         name = 'Guitar',
+        date_created = date.today(),
+        last_updated = date.today()
+    ),
+        Instrument(
+        name = 'Undefined',
         date_created = date.today(),
         last_updated = date.today()
     )

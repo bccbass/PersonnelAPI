@@ -1,6 +1,8 @@
 from os import environ
 
 from flask import Flask
+from marshmallow.exceptions import ValidationError
+
 from init import db, ma, bcrypt, jwt
 from blueprints.cli_bp import cli_commands
 from blueprints.albums_bp import albums_bp
@@ -19,7 +21,8 @@ def create_app():
     # JWT secret key
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
     # Allow for definable sort order of Schemas
-    app.config['JSON_SORT_KEYS'] = False
+    # app.config['JSON_SORT_KEYS'] = False
+    app.json.sort_keys = False
 
     # Pass in app object to all instances of modules
     db.init_app(app)
@@ -36,13 +39,25 @@ def create_app():
     app.register_blueprint(musicians_bp)
     app.register_blueprint(artists_bp)
 
+    # Handle records not found
     @app.errorhandler(404)
     def handle_404(err):
         return {'error': str(err)}, 404
 
+    # Handle auth errors
     @app.errorhandler(401)
-    def handle_404(err):
+    def handle_401(err):
         return {'error': str(err)}, 401
+
+    # Handle schema validation errors
+    @app.errorhandler(ValidationError)
+    def handle_ValidationError(err):
+        return {"error": err.__dict__['messages']}, 400
+
+    # Handle missing recquired fields
+    # @app.errorhandler(KeyError)
+    # def handle_KeyError(err):
+    #     return {"error": f'{str(err)} is required'}, 400
 
     return app
 

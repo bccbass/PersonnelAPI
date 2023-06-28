@@ -20,32 +20,29 @@ def get_artists():
 @artists_bp.route('/<int:artist_id>')
 @jwt_required()
 def get_one_artist(artist_id):
-    
     artist = locate_record(Artist, artist_id)
     return ArtistSchema().dump(artist)
 
 
 # CREATE
-
 @artists_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_artist():
     admin_verified()
-    try:
-        artist_req = ArtistSchema().load(request.json)
 
-        artist = Artist(
-                name=artist_req['name'],
-                albums=artist_req.get('albums', []),
-                date_created=datetime.now(timezone.utc),
-                last_updated=datetime.now(timezone.utc)
-                )
+    artist_req = ArtistSchema().load(request.json)
 
-        db.session.add(artist)
-        db.session.commit()
-        return ArtistSchema().dump(artist), 201
-    except:
-        return {"error": "New artist must have a valid name"}
+    artist = Artist(
+            name=artist_req['name'],
+            albums=artist_req.get('albums', []),
+            date_created=datetime.now(timezone.utc),
+            last_updated=datetime.now(timezone.utc)
+            )
+
+    db.session.add(artist)
+    db.session.commit()
+    return ArtistSchema().dump(artist), 201
+
 
 # UPDATE ARTIST
 @artists_bp.route('/<int:artist_id>', methods=['PUT', 'PATCH'])

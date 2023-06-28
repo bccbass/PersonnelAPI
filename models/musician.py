@@ -1,5 +1,8 @@
+from datetime import datetime, timezone
+
 from init import db, ma 
 from marshmallow import fields
+from marshmallow.validate import Length 
 
 
 
@@ -23,6 +26,17 @@ class Musician(db.Model):
         return f'<Musician "{self.f_name} {self.l_name}: {self.instrument}">'
     
 class MusicianSchema(ma.Schema):
+    # Validators:
+    f_name = fields.String(validate=Length(min=1, max=80))
+    l_name = fields.String(validate=Length(min=1, max=80))
+    instrument_id= fields.Int()
+    birthdate = fields.Date()
+    expiry = fields.Date()
+    img_url = fields.String()
+    date_created = fields.Date()
+    last_updated = fields.Date()
+
     instrument = fields.Nested('InstrumentSchema', only=['name'])
     class Meta:
         fields = ('id', 'f_name', 'l_name', 'instrument', 'birthdate', 'expiry', 'img_url', 'instrument_id')
+        ordered = True
