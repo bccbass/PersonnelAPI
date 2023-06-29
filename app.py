@@ -12,6 +12,7 @@ from blueprints.tracks_bp import tracks_bp
 from blueprints.artists_bp import artists_bp
 from blueprints.instruments_bp import instruments_bp
 from blueprints.musicians_bp import musicians_bp
+from blueprints.credit_bp import credit_bp
 
 def create_app():
     # create instance of Flask object
@@ -41,6 +42,7 @@ def create_app():
     app.register_blueprint(musicians_bp)
     app.register_blueprint(artists_bp)
     app.register_blueprint(instruments_bp)
+    app.register_blueprint(credit_bp)
 
     # Handle records not found
     @app.errorhandler(404)

@@ -19,6 +19,14 @@ def locate_record(Model, record_id):
     else:
         return record
 
+# ACCEPTS A SELECT STATEMENT AND LOCATES THE RECORD OR ABORTS
+def locate_stmt(stmt):
+    record = db.session.scalar(stmt)
+    if not record:
+        abort(404, description=f"Requested record does not exist.")
+    else:
+        return record
+
 
 # VERIFYS CREDENTIALS BY EXTRACTING USER ID FROM JWT TOKEN AND QUERYING DB
 # TO DETERMINE IF IS_ADMIN = TRUE, ABORTING IF IMPROPER AUTH.
@@ -32,6 +40,6 @@ def admin_verified():
 def preexisting_record(stmt):
     existing_album = db.session.scalar(stmt)
     if existing_album:
-        abort(400, description="Album already exists")
+        abort(400, description="Record already exists")
 
 char_value = '^[a-zA-Z0-9 ]+$'

@@ -1,5 +1,6 @@
 from init import db, ma 
 from marshmallow import fields
+from marshmallow.validate import Range
 
 class Track_Musician(db.Model):
     __tablename__ = 'track_musician'
@@ -10,6 +11,10 @@ class Track_Musician(db.Model):
     last_updated = db.Column(db.Date(), nullable=False)
 
 class Track_MusicianSchema(ma.Schema):
+    # Validators:
+    track_id = fields.Integer(validation=Range(min=1))
+    musician_id = fields.Integer(validation=Range(min=1))
+
     track = fields.Nested('TrackSchema')
     musicians = fields.List(fields.Nested('MusicianSchema'))
     class Meta:
