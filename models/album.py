@@ -3,7 +3,6 @@ from marshmallow import fields
 from marshmallow.validate import Length
 
 
-
 class Album(db.Model):
     __tablename__ = 'albums'
 

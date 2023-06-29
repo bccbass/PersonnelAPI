@@ -17,4 +17,5 @@ class Instrument(db.Model):
 class InstrumentSchema(ma.Schema):
 
     class Meta: 
-        fields = ('name', 'date_created', 'last_updated')
+        fields = ('id', 'name')
+        ordered = True

@@ -83,6 +83,6 @@ def delete_musician(musician_id):
 
     db.session.delete(musician)
     db.session.commit()
-    return {}, 200
+    return {'Message': f'Musician <{musician.f_name} {musician.l_name}> with id <{musician_id}> successfully deleted'}, 200
 
         

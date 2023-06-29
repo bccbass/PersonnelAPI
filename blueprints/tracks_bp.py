@@ -14,7 +14,7 @@ tracks_bp = Blueprint('tracks', __name__, url_prefix='/tracks')
 @jwt_required()
 def get_one_track(track_id):
     track = locate_record(Track, track_id)
-    return TrackSchema(exclude=['musicians.tracks']).dump(track)
+    return TrackSchema(exclude=['musicians.tracks', 'artist_id']).dump(track)
 
 # CREATE TRACK:
 @tracks_bp.route('/', methods=['POST'])
@@ -67,7 +67,7 @@ def delete_track(track_id):
     track = locate_record(Track, track_id)
     db.session.delete(track)
     db.session.commit()
-    return {}, 200
+    return {'Message': f'Track with title <{track.title}> and id <{track_id}> succesfully deleted!'}, 200
 
 
         

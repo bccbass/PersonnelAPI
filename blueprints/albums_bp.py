@@ -79,4 +79,4 @@ def delete_album(album_id):
     album = locate_record(Album, album_id)
     db.session.delete(album)
     db.session.commit()
-    return {}, 200
+    return {'Message': f'Album with title <{album.title}> and id <{album_id}> succesfully deleted!'}, 200

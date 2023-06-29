@@ -62,7 +62,7 @@ def update_artist(artist_id):
                     
     db.session.add(artist)
     db.session.commit()
-    return ArtistSchema(exclude=['albums']).dump(artist) 
+    return ArtistSchema(exclude=['albums']).dump(artist), 201 
 
 
 # DELETE ARTIST
@@ -73,7 +73,7 @@ def delete_artist(artist_id):
     artist = locate_record(Artist, artist_id)
     db.session.delete(artist)
     db.session.commit()
-    return {}, 200
+    return {'Message': f'Artist <{artist.name}> with id <{artist_id}> successfully deleted'}, 200
 
         
 

@@ -19,8 +19,6 @@ class Musician(db.Model):
     img_url = db.Column(db.String)
     date_created = db.Column(db.Date(), nullable=False)
     last_updated = db.Column(db.Date(), nullable=False)
-    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # tracks = db.relationship('Track', secondary=track_musician, backref='musicians')
     instrument = db.relationship('Instrument')
     def __repr__(self):
         return f'<Musician "{self.f_name} {self.l_name}: {self.instrument}">'

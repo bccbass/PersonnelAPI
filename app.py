@@ -10,6 +10,7 @@ from blueprints.albums_bp import albums_bp
 from blueprints.auth_bp import auth_bp
 from blueprints.tracks_bp import tracks_bp
 from blueprints.artists_bp import artists_bp
+from blueprints.instruments_bp import instruments_bp
 from blueprints.musicians_bp import musicians_bp
 
 def create_app():
@@ -39,6 +40,7 @@ def create_app():
     app.register_blueprint(tracks_bp)
     app.register_blueprint(musicians_bp)
     app.register_blueprint(artists_bp)
+    app.register_blueprint(instruments_bp)
 
     # Handle records not found
     @app.errorhandler(404)
@@ -63,7 +65,11 @@ def create_app():
     # Handle Integrity errors when UNIQUE FIELD is violated
     @app.errorhandler(IntegrityError)
     def handle_IntegrityError(err):
-        return {"error": str(err)}, 400
+        return {"error": 'Email address already in use'}, 400
+
+    @app.errorhandler(KeyError)
+    def handle_KeyErrorError(err):
+        return {"error": f'Missing fields: {str(err)}'}, 400
 
     return app
 
