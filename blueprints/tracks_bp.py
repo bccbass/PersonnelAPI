@@ -14,7 +14,7 @@ tracks_bp = Blueprint('tracks', __name__, url_prefix='/tracks')
 @jwt_required()
 def get_one_track(track_id):
     track = locate_record(Track, track_id)
-    return TrackSchema(exclude=['musicians.tracks', 'artist_id']).dump(track)
+    return TrackSchema(exclude=['musicians.tracks', 'musicians.birthdate', 'musicians.expiry', 'musicians.instrument_id', 'artist_id', 'album_id']).dump(track)
 
 # CREATE TRACK:
 @tracks_bp.route('/', methods=['POST'])
@@ -35,7 +35,7 @@ def create_track():
 
     db.session.add(track)
     db.session.commit()
-    return TrackSchema().dump(track), 201
+    return TrackSchema(exclude=['artist_id']).dump(track), 201
 
 # UPDATE TRACK 
 @tracks_bp.route('/<int:track_id>', methods=['PUT', 'PATCH'])

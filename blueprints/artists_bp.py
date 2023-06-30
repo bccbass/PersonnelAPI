@@ -21,7 +21,7 @@ def get_artists():
 @jwt_required()
 def get_one_artist(artist_id):
     artist = locate_record(Artist, artist_id)
-    return ArtistSchema().dump(artist)
+    return ArtistSchema(exclude=['albums.artist', 'albums.artist_id']).dump(artist)
 
 
 # CREATE ARTIST

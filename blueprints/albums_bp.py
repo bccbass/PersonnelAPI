@@ -21,7 +21,7 @@ def get_albums():
 @albums_bp.route('/<int:album_id>')
 def get_one_album(album_id):
     album = locate_record(Album, album_id)
-    return AlbumSchema().dump(album)
+    return AlbumSchema(exclude=['artist_id']).dump(album)
 
     
 # CREATE A NEW ALBUM:
