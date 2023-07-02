@@ -9,7 +9,6 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id', ondelete='CASCADE'))
-    label = db.Column(db.String(100))
     release_date = db.Column(db.Date)
     img_url = db.Column(db.String)
     date_created = db.Column(db.Date(), nullable=False)
@@ -27,7 +26,6 @@ class AlbumSchema(ma.Schema):
     title = fields.String(validate=Length(min=1, max=180))
     artist_id = fields.Integer()
     release_date = fields.Date()
-    label = fields.String(validate=Length(min=1, max=100))
     img_url = fields.Url()
     date_created = fields.Date()
     last_updated = fields.Date()
@@ -37,7 +35,7 @@ class AlbumSchema(ma.Schema):
     artist = fields.Nested('ArtistSchema', only=['name', 'id'])
     
     class Meta:
-        fields = ('id', 'title', 'artist', 'artist_id', 'release_date', 'img_url', 'label', 'tracks')
+        fields = ('id', 'title', 'artist', 'artist_id', 'release_date', 'img_url', 'tracks')
         ordered=True
 
 
