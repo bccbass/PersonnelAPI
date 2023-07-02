@@ -60,8 +60,6 @@ albums = [
     artist_id = 1,
     release_date = "11/2/1976",
     img_url = "https://i.discogs.com/ws-wRUxz6wzx0-CYDo7tu8JN_5yQE-j-1JRayeO0zr8/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY2ODQ2/LTEyMDkxNjgxNzUu/anBlZw.jpeg",
-    # created_by = 0,
-    label = "Columbia",
     date_created = date.today(),
     last_updated = date.today()
     ),
@@ -70,8 +68,6 @@ albums = [
     artist_id = 2,
     release_date = "9/23/1977",
     img_url = "https://i.discogs.com/3Pxzvua2yABfdbcOVeiTdXiLvIYxULvquQzSG6Cj-ak/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NDIz/MzQtMTMxOTU5NTc4/NC5qcGVn.jpeg",
-    # created_by = 0,
-    label = "ABC",
     date_created = date.today(),
     last_updated = date.today()
     ),
@@ -79,9 +75,7 @@ albums = [
     title = "Future Shock",
     artist_id = 3,
     release_date = "7/1/1983",
-    label = "Columbia",
     img_url = "https://upload.wikimedia.org/wikipedia/en/e/eb/Herbie_Hancock_-_Rockit.jpg",
-    # created_by = 0,
     date_created = date.today(),
     last_updated = date.today()
     ),
@@ -89,9 +83,7 @@ albums = [
     title = "Red Clay",
     artist_id = 4,
     release_date = "5/1/1970",
-    label = "CTI",
     img_url = "",
-    # created_by = 0,
     date_created = date.today(),
     last_updated = date.today()
     )

@@ -47,7 +47,7 @@ def update_track(track_id):
     track_req = TrackSchema().load(request.json)
     
     track.artist_id=track_req.get('artist_id', track.artist_id),
-    track.title=track_req.get('title')
+    track.title=track_req.get('title', track.title)
     track.album_id=track_req.get('album_id', track.album_id)
     track.track_number=track_req.get('track_number', track.track_number)
     track.duration=track_req.get('duration', track.duration)
@@ -56,7 +56,7 @@ def update_track(track_id):
 
     db.session.add(track)
     db.session.commit()
-    return TrackSchema(exclude=['album', 'musicians.tracks']).dump(track) 
+    return TrackSchema(exclude=['artist_id', 'album_id', 'musicians.tracks']).dump(track) 
 
 
 # DELETE TRACK

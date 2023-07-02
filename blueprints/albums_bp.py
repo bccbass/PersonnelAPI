@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from init import db, ma
 from models.album import Album, AlbumSchema
+from models.artist import Artist, ArtistSchema
 from utilities import admin_verified, locate_record, preexisting_record
 
 albums_bp = Blueprint('albums', __name__, url_prefix='/albums')
@@ -38,7 +39,6 @@ def create_album():
     album = Album(
         title=album_req['title'],
         artist_id=album_req['artist_id'],
-        label=album_req.get('label', None),
         release_date=album_req.get('release_date', None),
         img_url=album_req.get('img_url', None),
         date_created= datetime.now(timezone.utc),
@@ -46,8 +46,12 @@ def create_album():
     )
 
     db.session.add(album)
+    stmt = db.select(Album).filter_by(title=album.title, artist_id=album.artist_id)
+
+    # preexisting_record(stmt)
+
     db.session.commit()
-    return AlbumSchema().dump(album)
+    return AlbumSchema(exclude=['artist_id']).dump(album)
 
 # UPDATE ALBUM
 @albums_bp.route('/<int:album_id>', methods=['PUT', 'PATCH'])
@@ -59,7 +63,6 @@ def update_album(album_id):
         
     album.title = album_req.get('title', album.title)
     album.artist = album_req.get('artist', album.artist)
-    album.label = album_req.get('label', album.label)
     album.release_date = album_req.get('release_date', album.release_date)
     album.img_url = album_req.get('img_url', album.img_url)
     album.date_created = album.date_created

@@ -4,3 +4,6 @@ __pycache__
 .flaskenv
 .venv
 .env
+
+WIP_albums_bp.py
+global_bp.py
