@@ -39,6 +39,9 @@ def register_user():
 def login():
     try:
         user_req = UserSchema().load(request.json)
+
+        # Searches for one user, filtered by users email adress, obtained from JSON request
+        # SQL: SELECT * FROM users WHERE email=user_req['email'];
         stmt = db.select(User).filter_by(email=user_req['email'])
         user = db.session.scalar(stmt)
 
@@ -55,6 +58,9 @@ def login():
 @jwt_required()
 def grant_admin_access(user_id):
     admin_verified()
+
+    # Returns one user record, filtered by user ID recieved from <user_id>
+    # SQL: SELECT * FROM users WHERE id=<user_id>; 
     user = locate_record(User, user_id)
 
     user.is_admin = True
@@ -68,6 +74,9 @@ def grant_admin_access(user_id):
 @jwt_required()
 def show_all_users():
     admin_verified()
+
+    # Returns all available user records from the Database 
+    # SQL: SELECT * FROM users;
     stmt = db.select(User)
     users = db.session.scalars(stmt)
     

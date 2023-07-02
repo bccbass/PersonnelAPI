@@ -13,6 +13,8 @@ instruments_bp = Blueprint('instruments', __name__, url_prefix='/instruments')
 @instruments_bp.route('/')
 @jwt_required()
 def get_instruments():
+    # Returns a list of all available instrument records from the Database 
+    # SQL: SELECT * FROM instruments;
     stmt = db.select(Instrument)
     instruments = db.session.scalars(stmt).all()
     return InstrumentSchema(many=True).dump(instruments)

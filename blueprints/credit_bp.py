@@ -35,11 +35,15 @@ def create_credit():
 @credit_bp.route('/<int:credit_id>', methods=['DELETE'])
 def delete_credit(credit_id):
     if credit_id > 0:
+        # Returns one track_record record from the Database filtered by id, obtained from <credit_id>
+        # SQL: SELECT * FROM track_musician where id=<credit_id>;
         credit = locate_record(Track_Musician, credit_id)
         db.session.delete(credit)
         db.session.commit()
 
     if credit_id == 0:
+        # Returns one track_record record from the Database filtered by track id and musician id, obtained from user query string
+        # SQL: SELECT * FROM track_musician where musician_id=request.args['musician_id'] AND track_id=request.args['track_id'];
         stmt = db.select(Track_Musician).filter_by(musician_id=request.args['musician_id'], track_id=request.args['track_id'])
         credit = locate_stmt(stmt)
 

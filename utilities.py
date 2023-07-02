@@ -31,12 +31,15 @@ def locate_stmt(stmt):
 # VERIFYS CREDENTIALS BY EXTRACTING USER ID FROM JWT TOKEN AND QUERYING DB
 # TO DETERMINE IF IS_ADMIN = TRUE, ABORTING IF IMPROPER AUTH.
 def admin_verified():
+    # Locates one user from the database, filtered by their id which is obtained from the JWT token
+    # SQL: SELECT * FROM USERS WHERE id=get_jwt_identity()
     stmt = db.select(User).filter_by(id=get_jwt_identity())
     user = db.session.scalar(stmt)
 
     if not (user and user.is_admin):
         abort(401, description="Invalid credentials")
 
+# ACCEPTS A DATABASE SELECT STATEMENT AND IF LOCATED ABORTS WITH A 400 ERROR
 def preexisting_record(stmt):
     existing_album = db.session.scalar(stmt)
     if existing_album:

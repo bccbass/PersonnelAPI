@@ -13,6 +13,8 @@ tracks_bp = Blueprint('tracks', __name__, url_prefix='/tracks')
 @tracks_bp.route('/<int:track_id>')
 @jwt_required()
 def get_one_track(track_id):
+    # Returns one track record, filtered by track ID recieved from <track_id>
+    # SQL: SELECT * FROM tracks WHERE id=<track_id>;
     track = locate_record(Track, track_id)
     return TrackSchema(exclude=['musicians.tracks', 'musicians.birthdate', 'musicians.expiry', 'musicians.instrument_id', 'artist_id', 'album_id']).dump(track)
 
@@ -42,6 +44,9 @@ def create_track():
 @jwt_required()
 def update_track(track_id):
     admin_verified()
+
+    # Returns one track record, filtered by track ID recieved from <track_id>
+    # SQL: SELECT * FROM tracks WHERE id=<track_id>;
     track = locate_record(Track, track_id)
     
     track_req = TrackSchema().load(request.json)
@@ -64,6 +69,9 @@ def update_track(track_id):
 @jwt_required()
 def delete_track(track_id):
     admin_verified()
+
+    # Returns one track record to be deleted, filtered by track ID recieved from <track_id>
+    # SQL: SELECT * FROM tracks WHERE id=<track_id>;
     track = locate_record(Track, track_id)
     db.session.delete(track)
     db.session.commit()

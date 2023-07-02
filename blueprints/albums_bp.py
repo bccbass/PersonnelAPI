@@ -14,6 +14,8 @@ albums_bp = Blueprint('albums', __name__, url_prefix='/albums')
 @albums_bp.route('/')
 @jwt_required()
 def get_albums():
+    # Queries all available album records from the Database 
+    # SQL: SELECT * FROM albums;
     stmt = db.select(Album)
     albums = db.session.scalars(stmt).all()
     return AlbumSchema(many=True, exclude=['tracks']).dump(albums)
@@ -21,6 +23,8 @@ def get_albums():
 # GET ONE ALBUM:
 @albums_bp.route('/<int:album_id>')
 def get_one_album(album_id):
+    # Returns one album, filtered by album ID recieved as <album_id>, from the database
+    # SQL: SELECT * FROM albums WHERE id=<album_id>;
     album = locate_record(Album, album_id)
     return AlbumSchema(exclude=['artist_id']).dump(album)
 
@@ -33,6 +37,8 @@ def create_album():
     album_req = AlbumSchema().load(request.json)
 
     # CHECK ALBUM DOES NOT EXIST:
+    # Searches for one album, filtered by album title and artist_id, obtained from JSON request
+    # SQL: SELECT * FROM albums WHERE artist_id=album_req['artist_id'] AND title=album_req['title'];
     stmt = db.select(Album).filter_by(title=album_req['title'], artist_id=album_req['artist_id'])
     preexisting_record(stmt)
 
@@ -46,10 +52,6 @@ def create_album():
     )
 
     db.session.add(album)
-    stmt = db.select(Album).filter_by(title=album.title, artist_id=album.artist_id)
-
-    # preexisting_record(stmt)
-
     db.session.commit()
     return AlbumSchema(exclude=['artist_id']).dump(album)
 
@@ -59,6 +61,8 @@ def create_album():
 def update_album(album_id):
     admin_verified()
     album_req = AlbumSchema().load(request.json)
+    # Selects one album, filtered by album ID recieved as <album_id>, from the database to be updated and returned
+    # SQL: SELECT * FROM albums WHERE id=<album_id>;
     album = locate_record(Album, album_id)
         
     album.title = album_req.get('title', album.title)
@@ -79,6 +83,8 @@ def update_album(album_id):
 @jwt_required()
 def delete_album(album_id):
     admin_verified()
+    # Locates one album to delete, filtered by album ID recieved as <album_id>
+    # SQL: SELECT * FROM albums WHERE id=<album_id>;
     album = locate_record(Album, album_id)
     db.session.delete(album)
     db.session.commit()
