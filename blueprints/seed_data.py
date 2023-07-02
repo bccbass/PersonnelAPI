@@ -14,7 +14,7 @@ users = [
     User(
     name = "Personnel Dev",
     email = "dev@cs.com",
-    password = generate_pw('dev'),
+    password = generate_pw('developer'),
     is_admin = True,
     date_created = date.today(),
     last_updated = date.today()
@@ -22,7 +22,7 @@ users = [
     User(
     name = "Julian Adderly",
     email = "alto@cannonball.com",
-    password = generate_pw('soul'),
+    password = generate_pw('saxophone1958'),
     is_admin = False,
     date_created = date.today(),
     last_updated = date.today()
