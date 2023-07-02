@@ -12,6 +12,7 @@ musicians_bp = Blueprint('musicians', __name__, url_prefix='/musicians')
 
 # READ ALL MUSICIANS:
 @musicians_bp.route('/')
+@jwt_required()
 def get_musicians():
     # Returns all available Musician records from the Database 
     # SQL: SELECT * FROM musicians;
